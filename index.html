@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./images/favicon.ico" data-orighref="" rel="icon">
+  <title>导航页</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html,body {
+      height: 100%;
+      overflow: hidden;
+      user-select: none;
+      background-color: rgb(97,115,200);
+    }
+    #app {
+      height: 100%;
+      overflow: hidden;
+      background: url('https://nav.wyqsky.top:8006/images/bg4.jpeg') no-repeat;
+      background-size: 100% 100%;
+    }
+    #app .el-container {
+      height: 100%;
+    }
+
+    #app .el-header {
+      height: 60px;
+      line-height: 60px;
+      background-color: rgba(0, 0, 0, .4);
+      background-size: 100%;
+    }
+    #app .el-header .logo {
+      width: 100px;
+      height: 40px;
+      margin-top: 10px;
+    }
+    #app .el-header .logo img {
+      /* width: 100%; */
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* #app .el-main {} */
+    #app .el-main .wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+
+    }
+    #app .el-main .wrapper .nav-list {
+      /*margin-top: 30px;*/
+    }
+    #app .el-main .wrapper .nav-list .box-card {
+      margin-top: 20px;
+      background:rgba(0, 0, 0, .6);
+      color: #fff;
+      border: none;
+    }
+    #app .el-main .wrapper .nav-list .box-card .el-card__header {
+      border: none;
+    }
+    #app .el-main .wrapper .nav-list .box-card .el-card__body {
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    #app .el-main .wrapper .nav-list .box-card .el-card__body .item {
+      width: 12.5%;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    #app .el-main .wrapper .nav-list .box-card .el-card__body .item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+    }
+    #app .el-main .wrapper .nav-list .box-card .el-card__body .item p {
+      font-size: 12px;
+    }
+
+    @media screen and (max-width: 780px)  {
+      #app .el-main .wrapper .nav-list .box-card .el-card__body .item {
+        width: 25%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <el-container>
+      <el-header>
+        <div class="logo">
+          <img src="./images/logo.png" alt="">
+        </div>
+      </el-header>
+      <el-main>
+        <div class="wrapper">
+          <!-- 书签列表 -->
+          <div class="nav-list">
+            <el-card class="box-card" v-for="item in navList" :key="item.id">
+              <template #header>
+                <div class="card-header">
+                  <span>{{item.title}}</span>
+                </div>
+              </template>
+              <div class="item" v-for="subItem in item.list" :key="subItem.id" @click="jump(subItem)">
+                <img :src="subItem.iconUrl" alt="">
+                <p>{{subItem.name}}</p>
+              </div>
+            </el-card>
+          </div>
+        </div>
+        
+      </el-main>
+      <!-- <el-footer></el-footer> -->
+    </el-container>
+  </div>
+</body>
+<script>
+  const { createApp, reactive, toRefs } = Vue;
+  const navList = [
+    {
+      title: 'NAS服务',
+      id: '0',
+      list: [
+        {
+          name: 'NAS主机',
+          link: 'https://nas.wyqsky.top:8006/',
+          iconUrl: './images/nas.png',
+          order: 0,
+          id: '0-0',
+        },
+        {
+          name: 'Emby影视',
+          link: 'https://emby.wyqsky.top:8006',
+          iconUrl: './images/emby.png',
+          order: 1,
+          id: '0-1',
+        },
+        {
+          name: 'HASS家庭',
+          link: 'http://www.wyqsky.top:8123',
+          iconUrl: './images/hass.png',
+          order: 2,
+          id: '0-2',
+        },
+        {
+          name: '超文本链接',
+          link: 'https://online.wyqsky.top:8006',
+          iconUrl: './images/link.jpeg',
+          order: 3,
+          id: '0-3',
+        },
+        {
+          name: 'Halo博客',
+          link: 'https://web.wyqsky.top:8006',
+          iconUrl: './images/web.jpeg',
+          order: 3,
+          id: '0-4',
+        },
+        {
+          name: 'Alist网盘',
+          link: 'https://pan.wyqsky.top:8006',
+          iconUrl: './images/alist.svg',
+          order: 3,
+          id: '0-5',
+        },
+        {
+          name: '青龙面板',
+          link: 'https://ql.wyqsky.top:8006',
+          iconUrl: './images/ql.jpeg',
+          order: 3,
+          id: '0-6',
+        },
+        {
+          name: 'Drive共享',
+          link: 'https://nas.wyqsky.top:8006/drive',
+          iconUrl: './images/drive.png',
+          order: 3,
+          id: '0-7',
+        },
+        {
+          name: 'Audio音乐',
+          link: 'https://nas.wyqsky.top:8006/audio',
+          iconUrl: './images/audio.png',
+          order: 3,
+          id: '0-8',
+        },
+        {
+          name: 'Note笔记',
+          link: 'https://nas.wyqsky.top:8006/note',
+          iconUrl: './images/note.png',
+          order: 3,
+          id: '0-9',
+        },
+      ]
+    },
+    {
+      title: '影视影音',
+      id: '1',
+      list: [
+        {
+          name: '泥巴影院',
+          link: 'https://www.nivod.tv/',
+          iconUrl: './images/nbyy.png',
+          order: 0,
+          id: '1-0',
+        },
+        {
+          name: '茶杯狐',
+          link: 'https://cupfox.app/',
+          iconUrl: './images/cupfox.png',
+          order: 1,
+          id: '1-1',
+        },
+        {
+          name: '阿里小站',
+          link: 'https://pan666.cn/',
+          iconUrl: './images/alixiaozhan.ico',
+          order: 2,
+          id: '1-2',
+        },
+        {
+          name: '555电影',
+          link: 'https://555dy.com/',
+          iconUrl: './images/kannaifei.png',
+          order: 3,
+          id: '1-3',
+        },
+        {
+          name: '直播源',
+          link: 'https://youshandefeiyang.github.io', // https://zb.v1.mk https://github.com/youshandefeiyang/IPTV
+          iconUrl: './images/iptv.png',
+          order: 4,
+          id: '1-4',
+        },
+        {
+          name: '小宝影院',
+          link: 'https://xiaoheimi.net/',
+          iconUrl: './images/xiaoheimi.ico',
+          order: 5,
+          id: '1-5',
+        },
+        {
+          name: '下歌吧',
+          link: 'https://music.y444.cn/',
+          iconUrl: './images/xiageba.png',
+          order: 6,
+          id: '1-6',
+        },
+      ]
+    },
+    {
+      title: '工具库',
+      id: 'tools',
+      list: [
+        {
+          name: '印章制作',
+          link: 'http://seal.biaozhiku.com/',
+          iconUrl: './images/tuzhang.svg',
+          order: 0,
+          id: 'tools-0',
+        },
+        {
+          name: 'EasyPDF',
+          link: 'https://easypdf.com/',
+          iconUrl: './images/easypdf.png',
+          order: 1,
+          id: 'tools-1',
+        },
+      ]
+    },
+    {
+      title: '第三方导航',
+      id: 'thirds-nav',
+      list: [
+        {
+          name: '影视森林',
+          link: 'https://549.tv/',
+          iconUrl: './images/yssl.png',
+          order: 0,
+          id: 'thirds-nav-0',
+        },
+        {
+          name: '迷思爱',
+          link: 'https://box.misiai.com/',
+          iconUrl: './images/misiai.png',
+          order: 1,
+          id: 'thirds-nav-1',
+        },
+        {
+          name: '龙轩导航',
+          link: 'http://ilxdh.com',
+          iconUrl: './images/ilxdh.ico',
+          order: 2,
+          id: 'thirds-nav-2',
+        },
+        
+      ]
+    },
+    // {
+    //   title: 'NAS服务',
+    //   id: '0',
+    //   list: [
+    //     {
+    //       name: 'NAS主机',
+    //       link: 'https://nas.wyqsky.top:8006/',
+    //       iconUrl: './images/nas.png',
+    //       order: 0,
+    //       id: '0-0',
+    //     },
+    //   ]
+    // },
+  ];
+  const vue3Composition = {
+    setup() {
+      const d = reactive({
+        navList,
+        select: '1',
+        searchVal: ''
+      })
+
+      const jump = function (item) {
+        window.open(item.link);
+      }
+
+      return { 
+        ...toRefs(d),
+        jump
+      }
+    }
+  }
+  const app = createApp(vue3Composition);
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
+  app.use(ElementPlus).mount("#app");
+</script>
+</html>
